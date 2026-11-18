@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharmila - Developer Profile</title>
+
+    <!-- React CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #141e30, #493b76, #24243e);
+            padding: 20px;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .card {
+            width: 380px;
+            max-width: 100%;
+            padding: 30px;
+            text-align: center;
+            border-radius: 22px;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+            font-size: 26px;
+        }
+
+        .role {
+            color: #d4c5ff;
+            margin-bottom: 18px;
+        }
+
+        .bio {
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 9px;
+            margin: 15px 0 22px;
+        }
+
+        .skill {
+            padding: 8px 13px;
+            background: rgba(255,255,255,0.17);
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 8px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 7px;
+            font-weight: bold;
+        }
+
+        .like {
+            background: #ff6b9d;
+            color: white;
+        }
+
+        .theme {
+            background: #d4c5ff;
+            color: #222;
+        }
+
+        .light {
+            color: #222;
+        }
+
+        .light .card {
+            background: rgba(255,255,255,0.85);
+            border-color: white;
+        }
+
+        .light .role {
+            color: #6545a5;
+        }
+
+        .light .skill {
+            background: rgba(100,70,150,0.15);
+        }
+
+        .light .links a {
+            color: #333;
+        }
+
+        .footer {
+            margin-top: 18px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        // Reusable React Component
+        function ProfileCard({
+            name,
+            role,
+            bio,
+            skills,
+            avatar,
+            github,
+            linkedin
+        }) {
+
+            // State for Dark and Light Mode
+            const [isDark, setIsDark] = React.useState(true);
+
+            // State for Like Counter
+            const [likes, setLikes] = React.useState(0);
+
+            return (
+                <div className={isDark ? "" : "light"}>
+
+                    <div className="card">
+
+                        {/* Profile Photo */}
+                        <img
+                            className="avatar"
+                            src={avatar}
+                            alt={name}
+                        />
+
+                        {/* Personal Details */}
+                        <h1>{name}</h1>
+
+                        <p className="role">{role}</p>
+
+                        <p className="bio">{bio}</p>
+
+                        {/* Skills */}
+                        <h3>My Skills</h3>
+
+                        <div className="skills">
+                            {skills.map((skill, index) => (
+                                <span className="skill" key={index}>
+                                    {skill}
+                                </span>
+                            ))}
+                        </div>
+
+                        {/* Social Links */}
+                        <div className="links">
+                            <a href={github} target="_blank"
+                               rel="noreferrer">GitHub</a>
+
+                            <a href={linkedin} target="_blank"
+                               rel="noreferrer">LinkedIn</a>
+                        </div>
+
+                        <br />
+
+                        {/* Theme Toggle */}
+                        <button
+                            className="theme"
+                            onClick={() => setIsDark(!isDark)}
+                        >
+                            {isDark ? "☀ Light Mode" : "🌙 Dark Mode"}
+                        </button>
+
+                        <br />
+
+                        {/* Like Counter - Bonus Feature */}
+                        <button
+                            className="like"
+                            onClick={() => setLikes(likes + 1)}
+                        >
+                            ❤️ Like {likes}
+                        </button>
+
+                        <p className="footer">
+                            Designed with React ❤️
+                        </p>
+
+                    </div>
+                </div>
+            );
+        }
+
+        // Parent Component - Passing Props
+        function App() {
+
+            return (
+                <ProfileCard
+                    name="Sharmila R"
+
+                    role="Full Stack Developer"
+
+                    bio="I am a curious learner interested in software development and modern web technologies. I enjoy learning new technologies and building creative applications."
+
+                    skills={["Java", "React.js", "HTML", "CSS"]}
+
+                    avatar="profile.jpg"
+
+                    github="https://github.com/sharmila-ravi31"
+
+                    linkedin="https://www.linkedin.com/in/sharmila-ravi-9418142ba/"
+                />
+            );
+        }
+
+        // Rendering React Component
+        const root = ReactDOM.createRoot(
+            document.getElementById("root")
+        );
+
+        root.render(<App />);
+
+    </script>
+
+</body>
+</html>
